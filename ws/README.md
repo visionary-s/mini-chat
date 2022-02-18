@@ -1,0 +1,1 @@
+currently the user can only connect with tcp, ws connection is indevelopment
