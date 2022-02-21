@@ -1,7 +1,17 @@
 package main
 
-import "log"
+import (
+	"mini-chat/routers"
+
+	"github.com/gin-gonic/gin"
+	"github.com/spf13/viper"
+)
+
+func init() {
+	viper.SetConfigType("json")
+}
 
 func main() {
-	log.Println("New start")
+	router := gin.Default()
+	routers.Router()
 }
