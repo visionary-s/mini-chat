@@ -51,5 +51,6 @@ func Signout(c *gin.Context) {
 }
 
 func ListOnline(c *gin.Context) {
-
+	list := models.GetOnlineUsers()
+	return
 }
