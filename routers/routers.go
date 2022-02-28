@@ -4,17 +4,23 @@ import (
 	"mini-chat/middlewares/home"
 	"mini-chat/middlewares/user"
 
-	"github.com/gorilla/mux"
+	"github.com/gin-gonic/gin"
 )
 
-func Router() *mux.Router {
+func Router() *gin.Engine {
+	router := gin.New()
+	v1 := router.Group("/v1")
+	{
+		v1.GET("/home", home.Index)
 
-	router := mux.NewRouter()
-	userRouter := router.PathPrefix("/user").Subrouter()
-
-	router.HandleFunc("/", home.Index).Methods("GET", "OPTIONS")
-	userRouter.HandleFunc("/login", user.Login).Methods("POST", "OPTIONS")
-	userRouter.HandleFunc("/logout", user.Logout).Methods("GET", "OPTIONS")
+		userRouter := router.Group("/user")
+		{
+			userRouter.POST("/signup", user.Signup)
+			userRouter.POST("/signin", user.Signin)
+			userRouter.GET("/signout", user.Signout)
+			userRouter.GET("/all", user.ListOnline)
+		}
+	}
 
 	return router
 }

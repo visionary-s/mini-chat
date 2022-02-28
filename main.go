@@ -1,6 +1,7 @@
 package main
 
 import (
+	"mini-chat/models"
 	"mini-chat/routers"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 
 func init() {
 	viper.SetConfigType("json")
+	models.New().InitDB()
 }
 
 func main() {
