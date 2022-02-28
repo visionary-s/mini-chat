@@ -1,0 +1,32 @@
+package crypto
+
+import (
+	"crypto/rand"
+	"crypto/rsa"
+	"crypto/sha256"
+	"encoding/base64"
+	"log"
+)
+
+func Encrypt(msg string, key rsa.PublicKey) string {
+	label := []byte("OAEP Encrypted")
+	rng := rand.Reader
+
+	ciphertext, err := rsa.EncryptOAEP(sha256.New(), rng, &key, []byte(msg), label)
+	if err != nil {
+		log.Fatalln("Encrypt failed: \n%s", err)
+	}
+	return base64.StdEncoding.EncodeToString(ciphertext)
+}
+
+func Decrypt(cipherText string, key rsa.PrivateKey) string {
+	ct, _ := base64.StdEncoding.DecodeString(cipherText)
+	label := []byte("OAEP Encrypted")
+	rng := rand.Reader
+
+	plaintext, err := rsa.DecryptOAEP(sha256.New(), rng, &key, ct, label)
+	if err != nil {
+		log.Fatalln("Decrypt failed: \n%s", err)
+	}
+	return string(plaintext)
+}
