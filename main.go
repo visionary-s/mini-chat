@@ -6,6 +6,7 @@ import (
 	"mini-chat/models"
 	"mini-chat/routers"
 	"os"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
@@ -16,7 +17,8 @@ func Init() {
 
 	// init log
 	gin.DisableConsoleColor()
-	logfile := "/logs/gin.log"
+	timeNow := time.Now().Format("2006-01-02_15_04_05")
+	logfile := "logs/gin_" + timeNow + ".log"
 	f, _ := os.Create(logfile)
 	gin.DefaultWriter = io.MultiWriter(f)
 
@@ -31,6 +33,6 @@ func StartRoute() {
 }
 
 func main() {
-	go Init()
-	go StartRoute()
+	Init()
+	StartRoute()
 }
