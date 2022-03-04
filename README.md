@@ -5,10 +5,9 @@ I am turning the whole project to a new mode. More functions are in development 
 A chat app via WebSocket using Golang with `Gin` & `Gorilla WebSocket`
 
 # TO DO
-1. Intergration for user registeration and login part
-2. Update with group info
-3. Frontend UI
-4. Upload file(picture, video less than 5M, etc) in chat room
+1. Update with group info
+2. Frontend UI
+3. Upload file(picture, video less than 5M, etc) in chat room
 
 
 # Running the server
