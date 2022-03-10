@@ -66,7 +66,7 @@ func Signin(id uint, username string, password string, signinTime uint64) (user 
 // }
 
 func (u *User) Signout() {
-	user := u.SearchUser("username", u.Username)
+	user := u.SearchUserByName("username", u.Username)
 	currentTime := uint64(time.Now().Unix())
 	user.SignoutTime = currentTime
 	user.IsLogoff = true
@@ -91,15 +91,22 @@ func (u *User) IsOnline() (online bool) {
 	return true
 }
 
-func (u *User) SearchUser(field, value string) User {
+func (u *User) SearchUserByName(field, value string) User {
 	if field == "username" {
 		db.Where(field+" = ?", value).First(&u)
 	}
 	return *u
 }
 
+func (u *User) SearchUserById(field string, id uint) User {
+	if field == "id" {
+		db.Where(field+" = ?", id).First(&u)
+	}
+	return *u
+}
+
 func GetOnlineUsers() []map[string]interface{} {
 	var results []map[string]interface{}
-	db.Where("isLogoff = ?", false).Find(&results)
+	db.Where("islogoff = ?", false).Find(&results)
 	return results
 }

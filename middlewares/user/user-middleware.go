@@ -29,7 +29,7 @@ func Signin(c *gin.Context) {
 		return
 	}
 
-	u := user.SearchUser("username", c.PostForm("username"))
+	u := user.SearchUserByName("username", c.PostForm("username"))
 
 	ePwd := crypto.Encrypt(user.Password, u.Pubkey)
 	if u.ID > 0 {
@@ -52,5 +52,9 @@ func Signout(c *gin.Context) {
 
 func ListOnline(c *gin.Context) {
 	list := models.GetOnlineUsers()
-	return
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+	c.Header("Access-Control-Allow-Methods", "GET")
+	c.Header("Access-Control-Allow-Headers", "Content-Type")
+	c.Set("content-type", "application/json")
+	c.JSON(http.StatusOK, list)
 }
